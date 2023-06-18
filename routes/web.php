@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MusicController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,4 +26,12 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+});
+
+Route::middleware(['auth'])->group(function () {
+    // Music file routes
+    Route::get('/musics/upload', [MusicController::class, 'create'])->name('musics.create');
+    // Route::get('music-files/{id}/show', [MusicFileController::class, 'play'])->name('music-files.show');
+    Route::get('musics/{id}', [MusicController::class, 'show'])->name('musics.show');
+    Route::post('/musics', [MusicController::class, 'store'])->name('musics.store');
 });
